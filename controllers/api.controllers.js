@@ -3,6 +3,7 @@ const {
   fetchTopics,
   fetchArticlesById,
   fetchArticles,
+  fetchCommentsByArticleId,
 } = require('../models/api.models.');
 
 exports.getApi = (req, res) => {
@@ -24,8 +25,17 @@ exports.getArticlesById = (req, res, next) => {
     .catch(next);
 };
 
-exports.getArticles = (req, res, next) => {
+exports.getArticles = (req, res) => {
   fetchArticles().then((articles) => {
     res.status(200).send({ articles });
   });
+};
+
+exports.getCommentsByArticleId = (req, res, next) => {
+  const { article_id } = req.params;
+  fetchCommentsByArticleId(article_id)
+    .then((comments) => {
+      res.status(200).send({ comments });
+    })
+    .catch(next);
 };
